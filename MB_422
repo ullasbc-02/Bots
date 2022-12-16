@@ -1,0 +1,20 @@
+import openpyxl
+import webbrowser
+import time
+import pyautogui
+
+wb = openpyxl.load_workbook('MB_422.xlsx')
+
+
+sheet = wb['Sheet1']
+
+
+for row in sheet.iter_rows():
+  
+   for cell in row:
+       
+       value = cell.value
+       webbrowser.open(value)
+       time.sleep(5)
+       myScreenshot = pyautogui.screenshot()
+       myScreenshot.show()
