@@ -1,0 +1,30 @@
+You can also specify a range of cells to iterate through, for example:
+
+
+for row in sheet['A1:C3']:
+   for cell in row:
+       value = cell.value
+       print(value)
+
+
+This will iterate through the cells in the range A1:C3.
+
+Using pandas, you can read an Excel file into a dataframe and then iterate through the cells in the dataframe. For example:
+
+import pandas as pd
+
+# Read the Excel file into a dataframe
+df = pd.read_excel('filename.xlsx')
+
+# Iterate through the rows in the dataframe
+for index, row in df.iterrows():
+   # Iterate through the cells in the row
+   for value in row:
+       print(value)
+
+
+This will print the value of each cell in the dataframe. You can also access specific cells using the df.loc[] method, for example:
+
+value = df.loc[0, 'column_name']
+
+This will return the value in the first row and the column with the name "column_name".
