@@ -1,0 +1,13 @@
+import openpyxl
+
+# Load the workbook
+wb = openpyxl.load_workbook('filename.xlsx')
+
+# Get the sheet
+ws = wb['Sheet1']
+
+# Select the cell at row 3, column 2 (C3)
+cell = ws.cell(row=3, column=2)
+
+# Print the cell value
+print(cell.value)
