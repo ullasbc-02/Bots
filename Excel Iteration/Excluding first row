@@ -1,0 +1,18 @@
+import openpyxl
+
+# Load the workbook
+wb = openpyxl.load_workbook('filename.xlsx')
+
+# Get the sheet
+ws = wb['Sheet1']
+
+# Iterate through the rows in the sheet
+for index, row in enumerate(ws.iter_rows()):
+    # Skip the first row (column names)
+    if index == 0:
+        continue
+
+    # Iterate through the cells in the row
+    for cell in row:
+        # Print the cell value
+        print(cell.value)
