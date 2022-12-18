@@ -1,0 +1,32 @@
+import openpyxl
+import base64
+from cryptography.fernet import Fernet
+
+# Generate a new key
+key = Fernet.generate_key()
+cipher = Fernet(key)
+
+# Load the workbook
+wb = openpyxl.load_workbook('MB_474.xlsx')
+
+# Select the sheet you want to iterate through
+sheet = wb['Sheet1']
+
+for index, row in enumerate(sheet.iter_rows()):
+
+    # Iterate through the cells in the row
+    for cell in row:
+        # Print the cell value
+        if cell.column == 3 or cell.column == 4:
+            value = sheet.cell(row=cell.row, column=cell.column)
+            stre = str(cell.value)
+            encrypted_message = cipher.encrypt(stre.encode())
+            value.value = encrypted_message
+        
+wb.save('MB_474.xlsx')
+
+for row in sheet.iter_rows():
+    for cell in row:
+        if cell.column == 3 or cell.column == 4:
+            decrypted_message = cipher.decrypt(cell.value)
+            print(decrypted_message.decode("utf-8"))
