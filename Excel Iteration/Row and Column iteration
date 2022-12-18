@@ -1,0 +1,7 @@
+# Iterate over the rows and print the values
+for row in sheet.iter_rows():
+    print([cell.value for cell in row])
+
+# Iterate over the columns and print the values
+for column in sheet.iter_cols():
+    print([cell.value for cell in column])
