@@ -1,0 +1,30 @@
+import openpyxl
+import os
+
+wb = openpyxl.load_workbook('MB_464.xlsx')
+
+sheet = wb['Sheet1']
+transactionCode = []
+storageLocation = []
+
+for row in sheet.iter_rows():
+
+    for cell in row:
+        value = cell.value
+        if cell.column == 1:
+            transactionCode.append(value)
+        if cell.column == 2:
+            storageLocation.append(value)
+
+for i, (text, loc) in enumerate(zip(transactionCode, storageLocation)):
+    # Build the file name using the index
+    file_name = f'text{i + 1}.txt'
+
+    # Use os.path.join() to build the full path to the file
+    file_path = os.path.join(loc, file_name)
+
+    # Open the file in write mode
+    with open(file_path, 'w') as f:
+        # Write the text to the file
+        text = str(text)
+        f.write(text)
