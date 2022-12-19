@@ -1,0 +1,26 @@
+import xmlschema
+
+# Load the XSD schema
+#schema = xmlschema.XMLSchema(r"C:\Users\Vishrutha\Downloads\sample_CustomersOrders.xsd")
+schema = xmlschema.XMLSchema('books.xsd')
+
+# Load the XML document
+#xml_doc = r"C:\Users\Vishrutha\Downloads\sample_CustomersOrders.xml"
+xml_doc = 'books.xml'
+
+# Validate the XML document against the schema
+if schema.is_valid(xml_doc):
+    errors = schema.validate(xml_doc)
+    print("The XML document is valid")
+else:
+    pass
+
+
+
+
+# if errors:
+#     print("The XML document is invalid:")
+#     for error in errors:
+#         print(error)
+# else:
+#     print("The XML document is valid")
