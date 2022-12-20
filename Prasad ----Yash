@@ -1,0 +1,81 @@
+
+import os
+import shutil
+
+# Specify the source and destination folders
+#src_folder = r"D:\temp"
+# dst_folder = r"D:\temp1"
+
+src_folder = input()
+
+dst_folder = input()
+os.makedirs(dst_folder)
+
+# Iterate over the files in the source folder
+for filename in os.listdir(src_folder):
+    # Construct the full path of the file
+    src_file = os.path.join(src_folder, filename)
+
+    # Copy the file to the destination folder
+    shutil.copy(src_file, dst_folder)
+
+for filename in os.listdir(src_folder):
+    # Construct the full path of the file
+    file_path = os.path.join(src_folder, filename)
+
+    # Delete the file
+    os.remove(file_path)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+import openpyxl
+import smtplib
+from email.message import EmailMessage
+
+# Load the workbook
+wb = openpyxl.load_workbook('prasad.xlsx')
+
+# Get the sheet
+ws = wb['Sheet1']
+
+Password = 'Yas@1234'
+
+
+def Sendmail():
+    newMessage = EmailMessage()
+    newMessage['Subject'] = "Exception found!"
+    newMessage['From'] = 'yashpathak987@gmail.com'
+    newMessage['To'] = 'ullasbc11@gmail.com'
+    newMessage.set_content('Mail sent!')
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login('yashpathak987@gmail.com', Password)
+        smtp.send_message(newMessage)
+
+
+# Iterate through the rows in the sheet
+for index, row in enumerate(ws.iter_rows()):
+    # Skip the first row (column names)
+    if index == 0:
+        continue
+
+    # Iterate through the cells in the row
+    temp = ""
+    xyz = ""
+    for cell in row:
+        # Print the cell value
+        if cell.column == 1:
+            print(cell.value)
+            temp = type(cell.value)
+        if cell.column == 2:
+            xyz = cell.value.lower()
+        if temp != xyz:
+            if cell.column == 3:
+                cell.value = "Yes"
+                Sendmail()
+wb.save('prasad.xlsx')
+
+
+
