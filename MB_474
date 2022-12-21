@@ -30,3 +30,46 @@ for row in sheet.iter_rows():
         if cell.column == 3 or cell.column == 4:
             decrypted_message = cipher.decrypt(cell.value)
             print(decrypted_message.decode("utf-8"))
+            
+            
+            
+ -------------------------------------------------------------------------------------------
+ 
+ import openpyxl
+from cryptography.fernet import Fernet
+import sys
+# Generate a new key
+key = Fernet.generate_key()
+cipher = Fernet(key)
+
+try:
+    print("Enter the file path : ",end='')
+    filepath = input()
+    wb = openpyxl.load_workbook(filepath)
+except IOError as e:
+    print("I/O error({0}): {1}".format(e.errno, e.strerror))
+except:  # handle other exceptions such as attribute errors
+    print("Unexpected error:", sys.exc_info()[0])
+else:
+    # Select the sheet you want to iterate through
+    sheet = wb['Sheet1']
+    
+    for index, row in enumerate(sheet.iter_rows()):
+    
+        # Iterate through the cells in the row
+        for cell in row:
+            # Print the cell value
+            if cell.column == 3 or cell.column == 4:
+                value = sheet.cell(row=cell.row, column=cell.column)
+                stre = str(cell.value)
+                encrypted_message = cipher.encrypt(stre.encode())
+                value.value = encrypted_message
+    
+    wb.save(filepath)
+    
+    for row in sheet.iter_rows():
+        for cell in row:
+            if cell.column == 3 or cell.column == 4:
+                decrypted_message = cipher.decrypt(cell.value)
+                print(decrypted_message.decode("utf-8"))
+wb.close()
