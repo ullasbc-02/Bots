@@ -18,3 +18,37 @@ for row in sheet.iter_rows():
        time.sleep(5)
        myScreenshot = pyautogui.screenshot()
        myScreenshot.show()
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------------
+
+import sys
+import webbrowser
+import time
+import pyautogui
+import pandas as pd
+
+# Load the workbook
+try:
+    print("Enter the file path : ",end='')
+    df = pd.read_excel(input(), sheet_name='Sheet1')
+except IOError as e:
+    print("I/O error({0}): {1}".format(e.errno, e.strerror))
+except:  # handle other exceptions such as attribute errors
+    print("Unexpected error:", sys.exc_info()[0])
+else:
+    values = df['URL']
+    for i in values:
+        webbrowser.open(i)
+        time.sleep(5)
+        myScreenshot = pyautogui.screenshot()
+        myScreenshot.show()
