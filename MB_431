@@ -1,0 +1,22 @@
+import pandas as pd
+import sys
+
+try:
+    print("Enter the file path : ", end='')
+    filePath = input()
+    df = pd.read_excel(filePath, sheet_name='Sheet1')
+except IOError as e:
+    print("I/O error({0}): {1}".format(e.errno, e.strerror))
+except:
+    # handle other exceptions such as attribute errors
+    print("Unexpected error:", sys.exc_info()[0])
+else:
+    input_ = df['Input']
+    output_ = df['Output']
+    audit_Logs = df['Audit Logs']
+    error_Logs = df['Error Logs']
+    config = df['Config']
+    templates = df['Templates']
+    for (a, b, c, d, e, f) in zip(input_, output_, audit_Logs, error_Logs, config, templates):
+        print(a, b, c, d, e, f)
+
