@@ -20,3 +20,36 @@ for index, row in enumerate(sheet.iter_rows()):
             value = sheet.cell(row=cell.row, column=cell.column)
             value.fill = fill
 wb.save('MB_444.xlsx')
+
+
+---------------------------------------------------------------------
+
+import openpyxl
+from openpyxl.styles import PatternFill, Font, Border, Side
+import sys
+
+try:
+    print("Enter the file path : ", end='')
+    filepath = input()
+    wb = openpyxl.load_workbook(filepath)
+except IOError as e:
+    print("I/O error({0}): {1}".format(e.errno, e.strerror))
+except:  # handle other exceptions such as attribute errors
+    print("Unexpected error:", sys.exc_info()[0])
+else:
+    # Select the sheet you want to iterate through
+    sheet = wb['Sheet1']
+
+    fill = PatternFill(fgColor='00FF00', fill_type='solid')
+    for index, row in enumerate(sheet.iter_rows()):
+        # Skip the first row (column names)
+        if index == 0:
+            continue
+
+    # Iterate through the cells in the row
+    for cell in row:
+        # Print the cell value
+        if cell.value == 'pass':
+            value = sheet.cell(row=cell.row, column=cell.column)
+            value.fill = fill
+wb.save(filepath)
