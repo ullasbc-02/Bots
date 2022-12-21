@@ -24,3 +24,48 @@ with zipfile.ZipFile('archive.zip', 'w') as zip:
     # Add the files to the zip archive
     for file in filtered_files:
         zip.write(file)
+---------------------------------------------------------------------------------------------------
+import os
+import zipfile
+from datetime import datetime, timedelta
+import sys
+# Specify the directory to search
+try:
+
+    print("Enter the folder path to search: ", end='')
+    directory = input()
+except IOError as e:
+    print("I/O error({0}): {1}".format(e.errno, e.strerror))
+except:  # handle other exceptions such as attribute errors
+    print("Unexpected error:", sys.exc_info()[0])
+else:
+
+    # Set the start and end dates of the date range
+    print()
+    start_date = datetime(2021, 9, 1).date()
+    end_date = datetime(2021, 9, 30).date()
+    
+    
+    # Filter the list of files based on the modification date
+    filtered_files = []
+    try:
+        
+        for file in os.listdir(directory):
+            file_path = os.path.join(directory, file)
+            mod_date = datetime.fromtimestamp(os.path.getmtime(file_path)).date()
+            if start_date <= mod_date <= end_date:
+                filtered_files.append(file_path)
+        
+        # Print the list of filtered files
+        print(filtered_files)
+        
+        with zipfile.ZipFile('archive.zip', 'w') as zip:
+            # Add the files to the zip archive
+            for file in filtered_files:
+                zip.write(file)
+    except IOError as e:
+        print("I/O error({0}): {1}".format(e.errno, e.strerror))
+    except:  # handle other exceptions such as attribute errors
+        print("Unexpected error:", sys.exc_info()[0])
+        
+directory.close()
